@@ -109,6 +109,7 @@
     [pageConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[collectionView]|" options:NSLayoutFormatAlignAllLeft metrics:nil views:@{@"superview": self.view, @"collectionView": _pageCollectionView}]];
     [self.view addConstraints:pageConstraints];
     
+    /*
     //Create the navigation bar.
     _navigationToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
     _navigationToolbar.delegate = self;
@@ -123,7 +124,7 @@
     //Finish setup
     [_navigationToolbar sizeToFit];
     [self resetNavigationToolbar];
-    
+    */
     //Create the scrubber
     _pageScrubber = [[PDFKPageScrubber alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - self.bottomLayoutGuide.length, self.view.frame.size.width, 44.0) document:_document];
     _pageScrubber.scrubberDelegate = self;
