@@ -109,22 +109,23 @@
     [pageConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[collectionView]|" options:NSLayoutFormatAlignAllLeft metrics:nil views:@{@"superview": self.view, @"collectionView": _pageCollectionView}]];
     [self.view addConstraints:pageConstraints];
     
-    /*
-    //Create the navigation bar.
-    _navigationToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
-    _navigationToolbar.delegate = self;
-    //Set this to no, cant have autoresizing masks and layout constraints at the same time.
-    _navigationToolbar.translatesAutoresizingMaskIntoConstraints = NO;
-    //Add to the view
-    [self.view addSubview:_navigationToolbar];
-    //Create the constraints.
-    NSMutableArray *navigationToolbarConstraints = [[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[toolbar]|" options:NSLayoutFormatAlignAllBaseline metrics:nil views:@{@"superview": self.view, @"toolbar": _navigationToolbar}] mutableCopy];
-    [navigationToolbarConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayout]-0-[toolbar(44)]" options:NSLayoutFormatAlignAllLeft metrics:nil views:@{@"toolbar": _navigationToolbar, @"topLayout": self.topLayoutGuide}]];
-    [self.view addConstraints:navigationToolbarConstraints];
-    //Finish setup
-    [_navigationToolbar sizeToFit];
-    [self resetNavigationToolbar];
-    */
+      if (_enableToolbar) {
+          //Create the navigation bar.
+          _navigationToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
+          _navigationToolbar.delegate = self;
+          //Set this to no, cant have autoresizing masks and layout constraints at the same time.
+          _navigationToolbar.translatesAutoresizingMaskIntoConstraints = NO;
+          //Add to the view
+          [self.view addSubview:_navigationToolbar];
+          //Create the constraints.
+          NSMutableArray *navigationToolbarConstraints = [[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[toolbar]|" options:NSLayoutFormatAlignAllBaseline metrics:nil views:@{@"superview": self.view, @"toolbar": _navigationToolbar}] mutableCopy];
+          [navigationToolbarConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayout]-0-[toolbar(44)]" options:NSLayoutFormatAlignAllLeft metrics:nil views:@{@"toolbar": _navigationToolbar, @"topLayout": self.topLayoutGuide}]];
+          [self.view addConstraints:navigationToolbarConstraints];
+          //Finish setup
+          [_navigationToolbar sizeToFit];
+          [self resetNavigationToolbar];
+
+      }
     //Create the scrubber
     _pageScrubber = [[PDFKPageScrubber alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - self.bottomLayoutGuide.length, self.view.frame.size.width, 44.0) document:_document];
     _pageScrubber.scrubberDelegate = self;
@@ -332,6 +333,8 @@
 {
     if (self.presentingViewController) {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
